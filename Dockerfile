@@ -9,7 +9,7 @@ WORKDIR /app
 COPY ./requirements.txt /app
 RUN pip3 install -r requirements.txt
 
-COPY ./ /app/src
+COPY ./main.py /app/src
 
 ENV TZ="Asia/Shanghai"
 
