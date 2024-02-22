@@ -1,0 +1,5 @@
+# Output JSON
+.output/*.json
+
+# Local development
+dev/*
