@@ -5,9 +5,10 @@ EXPOSE 9000
 WORKDIR /app
 
 
-COPY  /app
-RUN pip3 install -r requirements.txt
+COPY ./requirements.txt /app
 
+RUN pip3 install -r requirements.txt
+COPY ./main.py /app/
 
 ENV TZ="Asia/Shanghai"
 
