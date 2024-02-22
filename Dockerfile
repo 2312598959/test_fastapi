@@ -10,6 +10,8 @@ COPY . /app
 
 RUN pip3 install -r requirements.txt
 
+# 设置环境变量
+ENV REQUEST_ID_HEADER=x-fc-request-id
 
 ENV TZ="Asia/Shanghai"
 
