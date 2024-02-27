@@ -1,0 +1,40 @@
+name: Kering Eyewear SharePoint Ingestion POC
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: poc
+    env:
+      RELEASE_VERSION: "1.0.1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login to ACR
+        uses: aliyun/acr-login@v1
+        with:
+          login-server: "${{vars.ACR_SERVER}}"
+          username: "${{ secrets.ACR_USERNAME }}"
+          password: "${{ secrets.ACR_PASSWD }}"
+          region-id: cn-hangzhou
+
+      - name: Build and push image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t ${{ vars.ACR_IMAGE }}:${{ env.RELEASE_VERSION }} .
+          docker push  ${{ vars.ACR_IMAGE }}:${{ env.RELEASE_VERSION }}
+
+      - name: Install Alicloud CLI
+        uses: aikin-vip/setup-aliyun-cli@v2.0.0
+        with:
+          access-key-id: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+          access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+          region: cn-hangzhou
+
+      - name: Update Function's image address
+        run: aliyun fc-open PUT /2021-04-06/services/${{vars.SERVICE_NAME}}/functions/${{ vars.FUNCTION_NAME }}  --header "Content-Type=application/json;" --body "{\"customContainerConfig\":{\"image\":\"${{ vars.ACR_IMAGE_VPC }}:${{ env.RELEASE_VERSION }}\",\"instanceID\":"${{ vars.ACR_INSTANCE_ID }}",\"accelerationType\":\"Default\",\"webServerMode\":true}}"
