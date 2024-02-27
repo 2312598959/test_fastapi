@@ -26,8 +26,8 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t ${{ vars.ACR_IMAGE }}:${{ env.RELEASE_VERSION }} .
-          docker push  ${{ vars.ACR_IMAGE }}:${{ env.RELEASE_VERSION }}
+          docker build -t ${{ vars.ACR_IMAGE }}:${{ env.IMAGE_TAG }} .
+          docker push  ${{ vars.ACR_IMAGE }}:${{ env.IMAGE_TAG }}
 
       - name: Install Alicloud CLI
         uses: aikin-vip/setup-aliyun-cli@v2.0.0
@@ -37,4 +37,4 @@ jobs:
           region: cn-hangzhou
 
       - name: Update Function's image address
-        run: aliyun fc-open PUT /2021-04-06/services/${{vars.SERVICE_NAME}}/functions/${{ vars.FUNCTION_NAME }} --body '{"customContainerConfig":{"image":"${{ vars.ACR_IMAGE }}:${{ env.RELEASE_VERSION }}"}}'
+        run: aliyun fc-open PUT /2021-04-06/services/${{vars.SERVICE_NAME}}/functions/${{ vars.FUNCTION_NAME }} --body '{"customContainerConfig":{"image":"${{ vars.ACR_IMAGE }}:${{ env.IMAGE_TAG }}"}}'
