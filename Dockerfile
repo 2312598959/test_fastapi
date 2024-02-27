@@ -15,4 +15,3 @@ ENV REQUEST_ID_HEADER=x-fc-request-id
 
 ENV TZ="Asia/Shanghai"
 
-CMD   uvicorn main:api_test --host=0.0.0.0 --port=9000
