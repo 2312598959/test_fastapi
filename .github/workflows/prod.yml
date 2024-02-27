@@ -10,6 +10,7 @@ jobs:
     environment: poc
     env:
       RELEASE_VERSION: "1.0.1"
+      IMAGE_TAG: ${{ github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -23,8 +24,6 @@ jobs:
           region-id: cn-hangzhou
 
       - name: Build and push image
-        env:
-          IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t ${{ vars.ACR_IMAGE }}:${{ env.IMAGE_TAG }} .
           docker push  ${{ vars.ACR_IMAGE }}:${{ env.IMAGE_TAG }}
