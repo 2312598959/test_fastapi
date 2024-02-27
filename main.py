@@ -8,6 +8,6 @@ api_test = FastAPI()
 
 def test():
 
-    return "hh"
+    return "Hello Word"
 
 
