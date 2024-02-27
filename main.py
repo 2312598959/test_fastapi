@@ -4,7 +4,7 @@ import uvicorn
 api_test = FastAPI()
 
 
-@api_test.get("/")
+@api_test.get("/invoke")
 def read_root():
 
     return "hh"
