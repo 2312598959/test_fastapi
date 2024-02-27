@@ -4,7 +4,7 @@ import uvicorn
 api_test = FastAPI()
 
 
-@api_test.api_route("/", methods=["GET", "POST", "PUT", "DELETE"])
+@api_test.api_route("/invoke", methods=["GET", "POST", "PUT", "DELETE"])
 
 def read_root():
 
