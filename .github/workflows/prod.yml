@@ -37,4 +37,4 @@ jobs:
           region: cn-hangzhou
 
       - name: Update Function's image address
-        run: aliyun fc-open PUT /2021-04-06/services/${{vars.SERVICE_NAME}}/functions/${{ vars.FUNCTION_NAME }}  --header "Content-Type=application/json;" --body "{\"customContainerConfig\":{\"image\":\"${{ vars.ACR_IMAGE }}:${{ env.RELEASE_VERSION }}\",\"accelerationType\":\"Default\",\"webServerMode\":true}}"
+        run: aliyun fc-open PUT /2021-04-06/services/${{vars.SERVICE_NAME}}/functions/${{ vars.FUNCTION_NAME }} --body '{"customContainerConfig":{"image":"${{ vars.ACR_IMAGE }}:${{ env.RELEASE_VERSION }}"}}'
