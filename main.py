@@ -16,7 +16,7 @@ async def invoke(incoming_request: Request):
     logger.info(f"Request header -> {incoming_request.headers}")
     logger.info("2.0")
     # 异步方式获取请求体
-    body = await request.body()
+    body = await incoming_request.body()
 
     print(body)
     # Get incoming request body
