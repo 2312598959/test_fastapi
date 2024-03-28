@@ -8,15 +8,19 @@ api_test = FastAPI()
 
 @api_test.get("/")
 @api_test.post("/invoke")
-def invoke(incoming_request: Request):
+async def invoke(incoming_request: Request):
     # Show version
     logger.info("1.0")
     print("access_key_id")
     # Check incoming request header
     logger.info(f"Request header -> {incoming_request.headers}")
     logger.info("2.0")
+    # 异步方式获取请求体
+    body = await request.body()
+
+    print(body)
     # Get incoming request body
-    body = incoming_request.json()
+    body = await incoming_request.json()
     logger.info(f"Request body -> {body}")
     logger.info("3.0")
     # Get incoming payload.json
